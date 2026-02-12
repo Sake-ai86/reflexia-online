@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <title>Мұғалім сабағын бағалау</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9966, #ff5e62);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 450px;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px 5px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* Бағалау батырмалары */
+        .excellent {
+            background: #28a745;
+            color: white;
+        }
+
+        .good {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .need {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Сброс */
+        .reset {
+            background: #6c757d;
+            color: white;
+            margin-top: 15px;
+        }
+
+        .counter {
+            margin-top: 15px;
+            font-size: 15px;
+            color: #444;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>👩‍🏫 Мұғалім сабағын бағалау</h2>
+    <p>Бүгінгі сабақтың сапасын қалай бағалайсың?</p>
+
+    <div class="buttons">
+        <button class="excellent" onclick="vote('excellent')">🌟 Өте жақсы</button>
+        <button class="good" onclick="vote('good')">👍 Жақсы</button>
+        <button class="need" onclick="vote('need')">⚠️ Жетілдіру керек</button>
+    </div>
+
+    <div class="counter">
+        Өте жақсы: <span id="excellentCount">0</span> | 
+        Жақсы: <span id="goodCount">0</span> | 
+        Жетілдіру: <span id="needCount">0</span>
+    </div>
+
+    <div class="result" id="result">Дауыс беріңіз</div>
+
+    <button class="reset" onclick="resetVotes()">🔄 Қайта бастау</button>
+
+</div>
+
+<script>
+    let excellent = 0;
+    let good = 0;
+    let need = 0;
+
+    function vote(type) {
+        if (type === 'excellent') excellent++;
+        if (type === 'good') good++;
+        if (type === 'need') need++;
+
+        updateDisplay();
+        showResult();
+    }
+
+    function updateDisplay() {
+        document.getElementById('excellentCount').textContent = excellent;
+        document.getElementById('goodCount').textContent = good;
+        document.getElementById('needCount').textContent = need;
+    }
+
+    function showResult() {
+        let max = Math.max(excellent, good, need);
+        let text = "";
+
+        if (max === 0) {
+            text = "Дауыс жоқ";
+        }
+        else if (max === excellent) {
+            text = "🌟 Көпшілік сабақ өте жақсы өтті деп санайды";
+        }
+        else if (max === good) {
+            text = "👍 Көпшілік сабақ жақсы өтті деп санайды";
+        }
+        else {
+            text = "⚠️ Сабақты жетілдіру қажет";
+        }
+
+        document.getElementById('result').textContent = text;
+    }
+
+    function resetVotes() {
+        excellent = 0;
+        good = 0;
+        need = 0;
+
+        updateDisplay();
+        document.getElementById('result').textContent = "Дауыс беріңіз";
+    }
+</script>
+
+</body>
+</html>
